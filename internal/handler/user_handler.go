@@ -78,7 +78,7 @@ func (h *Handler) DeleteUserById(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, statusResponce{
-		Status: true,
+		Status:  true,
 		Message: fmt.Sprintf("User was delete with id:%d", id),
 	})
 }

@@ -37,7 +37,7 @@ func (u *UserMysql) GetById(id int) (domain.User, error) {
 }
 
 func (u *UserMysql) GetAllUsers() []domain.User {
-    var users []domain.User
+	var users []domain.User
 	u.db.Debug().Order("id desc").Find(&users)
 	return users
 }
@@ -67,8 +67,14 @@ func (u *UserMysql) UpdateUser(userRequest domain.User) (domain.User, error) {
 		mistake := fmt.Sprintf("user not found with id:%d", userRequest.Id)
 		return user, errors.New(mistake)
 	}
-	user.Name = userRequest.Name
-	user.Age = userRequest.Age
+
+	if user.Name != userRequest.Name && len(userRequest.Name) > 0 {
+		user.Name = userRequest.Name
+	}
+
+	if user.Age != userRequest.Age && userRequest.Age != 0 {
+		user.Age = userRequest.Age
+	}
 
 	u.db.Save(user)
 	return user, nil

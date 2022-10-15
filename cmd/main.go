@@ -86,14 +86,14 @@ func main() {
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 		logger.Config{
-		  SlowThreshold:              time.Second,   // Slow SQL threshold
-		  LogLevel:                   logger.Silent, // Log level
-		  IgnoreRecordNotFoundError: true,           // Ignore ErrRecordNotFound error for logger
-		  Colorful:                  false,          // Disable color
+			SlowThreshold:             time.Second,   // Slow SQL threshold
+			LogLevel:                  logger.Silent, // Log level
+			IgnoreRecordNotFoundError: true,          // Ignore ErrRecordNotFound error for logger
+			Colorful:                  false,         // Disable color
 		},
-	  )
+	)
 
-	db, err := gorm.Open(sqlite.Open(dir + "\\cmd\\gorm.db"), &gorm.Config{Logger: newLogger})
+	db, err := gorm.Open(sqlite.Open(dir+"\\cmd\\gorm.db"), &gorm.Config{Logger: newLogger})
 	// db, err := gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{})
 
 	if err != nil {
@@ -104,7 +104,7 @@ func main() {
 	service := services.NewService(rep)
 	handlers := handler.NewHandler(service)
 
-	srv :=  new(domain.Server)
+	srv := new(domain.Server)
 	if err := srv.Run("8081", handlers.InitRoutes()); err != nil {
 		logrus.Fatal("error occured while running http server: %s", err.Error())
 	}
