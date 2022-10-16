@@ -2,12 +2,15 @@ package domain
 
 import (
 	"fmt"
+	"time"
 )
 
 type User struct {
-	Id int
-	Name string
-	Age  int
+	Id        int    `gorm:"not null;uniqueIndex;primary_key"`
+	Name      string `gorm:"size:100;not null"`
+	Age       int    `gorm:"not null"`
+	CreatedAt time.Time
+	UpdateAt  time.Time
 }
 
 func (u *User) GetInfo() {

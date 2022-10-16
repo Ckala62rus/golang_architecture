@@ -15,8 +15,10 @@ type getAllUsers struct {
 
 func (h *Handler) GetAllUsers(c *gin.Context) {
 	users := h.services.Users.GetAllUsers()
-	c.JSON(http.StatusOK, getAllUsers{
-		Users: users,
+	c.JSON(http.StatusOK, statusResponce{
+		Status:  true,
+		Message: "all users",
+		Data:    getAllUsers{Users: users},
 	})
 }
 
@@ -27,7 +29,11 @@ func (h *Handler) GetUserByName(c *gin.Context) {
 		newErrorResponse(c, http.StatusNotFound, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, statusResponce{
+		Status:  true,
+		Message: "one user",
+		Data:    user,
+	})
 }
 
 func (h *Handler) GetById(c *gin.Context) {
@@ -43,7 +49,11 @@ func (h *Handler) GetById(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, statusResponce{
+		Status:  true,
+		Message: "one user",
+		Data:    user,
+	})
 }
 
 func (h *Handler) CreateUser(c *gin.Context) {
@@ -61,7 +71,11 @@ func (h *Handler) CreateUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, newUser)
+	c.JSON(http.StatusOK, statusResponce{
+		Status:  true,
+		Message: "one user",
+		Data:    newUser,
+	})
 }
 
 func (h *Handler) DeleteUserById(c *gin.Context) {
@@ -106,5 +120,9 @@ func (h *Handler) UpdateUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, updateUser)
+	c.JSON(http.StatusOK, statusResponce{
+		Status:  true,
+		Message: "updated user",
+		Data:    updateUser,
+	})
 }

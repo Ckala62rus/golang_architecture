@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -100,6 +101,9 @@ func main() {
 		panic(err.Error())
 	}
 
+	// Run migration initialize
+	AutoMigrateInitialize(db)
+
 	rep := repositories.NewUserRepository(db)
 	service := services.NewService(rep)
 	handlers := handler.NewHandler(service)
@@ -112,4 +116,17 @@ func main() {
 	// stop time execute
 	// startTimeEnd := time.Now()
 	// fmt.Println(startTimeEnd.Sub(startTime))
+}
+
+func AutoMigrateInitialize(db *gorm.DB) {
+	// initialize auto migration
+	for _, model := range domain.RegisterModel() {
+		err := db.Debug().AutoMigrate(model.Model)
+
+		if err != nil {
+			logrus.Fatal(err)
+		}
+	}
+
+	fmt.Println("Database migrated successfully!")
 }
