@@ -17,61 +17,21 @@ import (
 	"gorm.io/gorm/logger"
 )
 
+// @title           Swagger Example API
+// @version         1.0
+// @description     This is a sample server celler server.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8081
+// @BasePath  /api/
 func main() {
-	// layout := "02:01:2006"
-	// startTime := time.Now()
-
-	// ch := make(chan bool)
-	// ch2 := make(chan bool)
-
-	// flag := false
-
-	// go func(){
-	// 	message := <- ch2
-
-	// 	time.Sleep(5 * time.Second)
-
-	// 	fmt.Println("ch2 отработал")
-	// 	fmt.Println(message)
-	// 	ch2 <- true
-	// }()
-
-	// ch2 <- false
-
-	// go func(){
-	// 	message := <- ch
-
-	// 	time.Sleep(4 * time.Second)
-
-	// 	fmt.Println("ch отработал")
-	// 	fmt.Println(message)
-
-	// 	ch <- true
-	// }()
-
-	// ch <- false
-
-	// for i:= 0; i < 3; i++ {
-	// 	time.Sleep(1 * time.Second)
-	// 	fmt.Println("test test")
-	// 	flag = true
-	// }
-
-	// outChan := <-ch
-	// outChan2 := <-ch2
-
-	// if flag && outChan && outChan2 {
-	// 	fmt.Println(outChan)
-	// 	fmt.Println(outChan2)
-	// 	fmt.Println("обе программы отработали")
-	// }
-
-	// startTimeEnd := time.Now()
-
-	// fmt.Println(startTimeEnd.Sub(startTime))
-
-	// return
-
 	// start time execute
 	// startTime := time.Now()
 

@@ -10,7 +10,7 @@ type User struct {
 	Name      string `gorm:"size:100;not null"`
 	Age       int    `gorm:"not null"`
 	CreatedAt time.Time
-	UpdateAt  time.Time
+	UpdatedAt time.Time
 }
 
 func (u *User) GetInfo() {

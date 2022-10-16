@@ -13,6 +13,14 @@ type getAllUsers struct {
 	Users []domain.User `json:"users"`
 }
 
+// Get all users
+// @Summary      Get all users
+// @Description  return all users
+// @Tags         users
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  statusResponce
+// @Router       /users/ [get]
 func (h *Handler) GetAllUsers(c *gin.Context) {
 	users := h.services.Users.GetAllUsers()
 	c.JSON(http.StatusOK, statusResponce{
@@ -22,6 +30,14 @@ func (h *Handler) GetAllUsers(c *gin.Context) {
 	})
 }
 
+// @Summary      Get user by Name
+// @Description  get user by Name
+// @Tags         users
+// @Accept       json
+// @Produce      json
+// @Param        name path string  true "User name"
+// @Success      200  {object}  statusResponce
+// @Router       /users/user/{name} [get]
 func (h *Handler) GetUserByName(c *gin.Context) {
 	name := c.Param("name")
 	user, err := h.services.Users.GetUserByName(name)
@@ -36,6 +52,14 @@ func (h *Handler) GetUserByName(c *gin.Context) {
 	})
 }
 
+// @Summary      Get user by ID
+// @Description  get user by ID
+// @Tags         users
+// @Accept       json
+// @Produce      json
+// @Param        id   path      int  true  "User ID"
+// @Success      200  {object}  statusResponce
+// @Router       /users/{id} [get]
 func (h *Handler) GetById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -56,8 +80,22 @@ func (h *Handler) GetById(c *gin.Context) {
 	})
 }
 
+type CreateUser struct {
+	Name string
+	Age  int
+}
+
+// @Summary CreateUser
+// @Tags users
+// @Description create new user
+// @ID login
+// @Accept  json
+// @Produce  json
+// @Param input body CreateUser true "credentials"
+// @Success      200  {object}  statusResponce
+// @Router /users/ [post]
 func (h *Handler) CreateUser(c *gin.Context) {
-	var user domain.User
+	var user CreateUser
 
 	err := c.BindJSON(&user)
 	if err != nil {
@@ -65,7 +103,7 @@ func (h *Handler) CreateUser(c *gin.Context) {
 		return
 	}
 
-	newUser, err := h.services.Users.CreateUser(user)
+	newUser, err := h.services.Users.CreateUser(domain.User{Name: user.Name, Age: user.Age})
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -78,6 +116,14 @@ func (h *Handler) CreateUser(c *gin.Context) {
 	})
 }
 
+// @Summary      Delete user by ID
+// @Description  Delete user by ID
+// @Tags         users
+// @Accept       json
+// @Produce      json
+// @Param        id   path      int  true  "User ID"
+// @Success      200  {object}  statusResponce
+// @Router       /users/{id} [delete]
 func (h *Handler) DeleteUserById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -97,8 +143,23 @@ func (h *Handler) DeleteUserById(c *gin.Context) {
 	})
 }
 
+type UpdateUser struct {
+	Name string
+	Age  int
+}
+
+// @Summary 	 Update user
+// @Tags         users
+// @Description  update user
+// @ID login
+// @Accept       json
+// @Produce      json
+// @Param        id path int true "User ID"
+// @Param 	     input body UpdateUser true "credentials"
+// @Success      200  {object}  statusResponce
+// @Router       /users/{id} [put]
 func (h *Handler) UpdateUser(c *gin.Context) {
-	var user domain.User
+	var user UpdateUser
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -112,9 +173,7 @@ func (h *Handler) UpdateUser(c *gin.Context) {
 		return
 	}
 
-	user.Id = id
-
-	updateUser, err := h.services.Users.UpdateUser(user)
+	updateUser, err := h.services.Users.UpdateUser(domain.User{Id: id, Name: user.Name, Age: user.Age})
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
