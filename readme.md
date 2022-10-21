@@ -3,3 +3,6 @@
 
 2. запуск проекта
    cls; go run .\cmd\main.go
+
+3. сборка проекта
+   go build .\cmd\main.go

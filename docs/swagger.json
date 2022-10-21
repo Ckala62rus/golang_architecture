@@ -88,6 +88,11 @@
         },
         "/users/": {
             "get": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "description": "return all users",
                 "consumes": [
                     "application/json"
@@ -109,6 +114,11 @@
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "description": "create new user",
                 "consumes": [
                     "application/json"
@@ -144,6 +154,11 @@
         },
         "/users/user/{name}": {
             "get": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "description": "get user by Name",
                 "consumes": [
                     "application/json"
@@ -176,6 +191,11 @@
         },
         "/users/{id}": {
             "get": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "description": "get user by ID",
                 "consumes": [
                     "application/json"
@@ -206,6 +226,11 @@
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "description": "update user",
                 "consumes": [
                     "application/json"
@@ -246,6 +271,11 @@
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "description": "Delete user by ID",
                 "consumes": [
                     "application/json"
@@ -337,6 +367,13 @@
                     "type": "boolean"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "Authorization": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

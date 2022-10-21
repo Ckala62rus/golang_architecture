@@ -21,7 +21,15 @@ type getAllUsers struct {
 // @Produce      json
 // @Success      200  {object}  statusResponce
 // @Router       /users/ [get]
+// @Security Authorization
 func (h *Handler) GetAllUsers(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
+
+	fmt.Println(userId)
+
 	users := h.services.Users.GetAllUsers()
 	c.JSON(http.StatusOK, statusResponce{
 		Status:  true,
@@ -38,6 +46,7 @@ func (h *Handler) GetAllUsers(c *gin.Context) {
 // @Param        name path string  true "User name"
 // @Success      200  {object}  statusResponce
 // @Router       /users/user/{name} [get]
+// @Security Authorization
 func (h *Handler) GetUserByName(c *gin.Context) {
 	name := c.Param("name")
 	user, err := h.services.Users.GetUserByName(name)
@@ -60,6 +69,7 @@ func (h *Handler) GetUserByName(c *gin.Context) {
 // @Param        id   path      int  true  "User ID"
 // @Success      200  {object}  statusResponce
 // @Router       /users/{id} [get]
+// @Security Authorization
 func (h *Handler) GetById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -94,6 +104,7 @@ type CreateUser struct {
 // @Param input body CreateUser true "credentials"
 // @Success      200  {object}  statusResponce
 // @Router /users/ [post]
+// @Security Authorization
 func (h *Handler) CreateUser(c *gin.Context) {
 	var user CreateUser
 
@@ -124,6 +135,7 @@ func (h *Handler) CreateUser(c *gin.Context) {
 // @Param        id   path      int  true  "User ID"
 // @Success      200  {object}  statusResponce
 // @Router       /users/{id} [delete]
+// @Security Authorization
 func (h *Handler) DeleteUserById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -158,6 +170,7 @@ type UpdateUser struct {
 // @Param 	     input body UpdateUser true "credentials"
 // @Success      200  {object}  statusResponce
 // @Router       /users/{id} [put]
+// @Security Authorization
 func (h *Handler) UpdateUser(c *gin.Context) {
 	var user UpdateUser
 

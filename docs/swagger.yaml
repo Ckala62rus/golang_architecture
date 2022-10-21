@@ -109,6 +109,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/handler.statusResponce'
+      security:
+      - Authorization: []
       summary: Get all users
       tags:
       - users
@@ -131,6 +133,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/handler.statusResponce'
+      security:
+      - Authorization: []
       summary: CreateUser
       tags:
       - users
@@ -152,6 +156,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/handler.statusResponce'
+      security:
+      - Authorization: []
       summary: Delete user by ID
       tags:
       - users
@@ -172,6 +178,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/handler.statusResponce'
+      security:
+      - Authorization: []
       summary: Get user by ID
       tags:
       - users
@@ -199,6 +207,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/handler.statusResponce'
+      security:
+      - Authorization: []
       summary: Update user
       tags:
       - users
@@ -220,7 +230,14 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/handler.statusResponce'
+      security:
+      - Authorization: []
       summary: Get user by Name
       tags:
       - users
+securityDefinitions:
+  Authorization:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

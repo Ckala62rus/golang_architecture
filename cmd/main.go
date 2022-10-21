@@ -31,6 +31,10 @@ import (
 
 // @host      localhost:8081
 // @BasePath  /api/
+
+// @securityDefinitions.apikey Authorization
+// @in header
+// @name Authorization
 func main() {
 	// start time execute
 	// startTime := time.Now()
@@ -67,6 +71,8 @@ func main() {
 	rep := repositories.NewUserRepository(db)
 	service := services.NewService(rep)
 	handlers := handler.NewHandler(service)
+
+	logrus.Info("Server start on localhost:8081")
 
 	srv := new(domain.Server)
 	if err := srv.Run("8081", handlers.InitRoutes()); err != nil {
