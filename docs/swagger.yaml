@@ -1,5 +1,12 @@
 basePath: /api/
 definitions:
+  handler.CreateAuthUser:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
   handler.CreateUser:
     properties:
       age:
@@ -13,6 +20,16 @@ definitions:
         type: integer
       name:
         type: string
+    type: object
+  handler.signInInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
     type: object
   handler.statusResponce:
     properties:
@@ -36,6 +53,50 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
+  /auth/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: login and return authorization bearer token
+      parameters:
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.signInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponce'
+      summary: SignIn
+      tags:
+      - auth
+  /auth/sign-up:
+    post:
+      consumes:
+      - application/json
+      description: return id created user
+      parameters:
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreateAuthUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponce'
+      summary: Authentication in system
+      tags:
+      - auth
   /users/:
     get:
       consumes:

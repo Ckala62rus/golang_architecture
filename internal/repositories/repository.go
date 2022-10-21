@@ -5,6 +5,11 @@ import (
 	"gorm.io/gorm"
 )
 
+type Authorization interface {
+	CreateUser(user domain.User) (int, error)
+	GetUser(email, password string) (domain.User, error)
+}
+
 type Users interface {
 	CreateUser(user domain.User) (domain.User, error)
 	GetUserByName(name string) (domain.User, error)
@@ -16,8 +21,12 @@ type Users interface {
 
 type Repository struct {
 	Users
+	Authorization
 }
 
 func NewUserRepository(db *gorm.DB) *Repository {
-	return &Repository{Users: NewUsersMysql(db)}
+	return &Repository{
+		Users:         NewUsersMysql(db),
+		Authorization: NewAuthGorm(db),
+	}
 }
