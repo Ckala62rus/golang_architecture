@@ -2,7 +2,7 @@ package handler
 
 import (
 	_ "github.com/Ckala62rus/go/docs" // docs folder
-	"github.com/Ckala62rus/go/internal/services"
+	"github.com/Ckala62rus/go/pkg/services"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware

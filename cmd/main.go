@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/Ckala62rus/go/domain"
-	"github.com/Ckala62rus/go/internal/handler"
-	"github.com/Ckala62rus/go/internal/repositories"
-	"github.com/Ckala62rus/go/internal/services"
+	"github.com/Ckala62rus/go/pkg/handler"
+	"github.com/Ckala62rus/go/pkg/repositories"
+	"github.com/Ckala62rus/go/pkg/services"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/sqlite"
@@ -86,7 +86,7 @@ func main() {
 
 func AutoMigrateInitialize(db *gorm.DB) {
 	// initialize auto migration
-	for _, model := range domain.RegisterModel() {
+	for _, model := range repositories.RegisterModel() {
 		err := db.Debug().AutoMigrate(model.Model)
 
 		if err != nil {

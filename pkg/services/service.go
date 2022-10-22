@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/Ckala62rus/go/domain"
-	"github.com/Ckala62rus/go/internal/repositories"
+	"github.com/Ckala62rus/go/pkg/repositories"
 )
 
 type Authorization interface {

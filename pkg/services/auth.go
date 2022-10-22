@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/Ckala62rus/go/domain"
-	"github.com/Ckala62rus/go/internal/repositories"
+	"github.com/Ckala62rus/go/pkg/repositories"
 	"github.com/dgrijalva/jwt-go"
 )
 

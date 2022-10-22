@@ -1,4 +1,6 @@
-package domain
+package repositories
+
+import "github.com/Ckala62rus/go/domain"
 
 type Model struct {
 	Model interface{}
@@ -6,6 +8,6 @@ type Model struct {
 
 func RegisterModel() []Model {
 	return []Model{
-		{Model: User{}},
+		{Model: domain.User{}},
 	}
 }
