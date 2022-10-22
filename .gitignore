@@ -1,3 +1,4 @@
 **/cmd/.env
 **.vscode
 /main.exe
+**/images
