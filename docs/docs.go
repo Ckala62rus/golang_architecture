@@ -93,6 +93,39 @@ const docTemplate = `{
                 }
             }
         },
+        "/upload": {
+            "post": {
+                "description": "upload other files",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "upload"
+                ],
+                "summary": "Upload file",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "this is a test file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.statusResponce"
+                        }
+                    }
+                }
+            }
+        },
         "/users/": {
             "get": {
                 "security": [

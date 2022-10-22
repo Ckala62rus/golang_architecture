@@ -97,6 +97,28 @@ paths:
       summary: Authentication in system
       tags:
       - auth
+  /upload:
+    post:
+      consumes:
+      - application/json
+      description: upload other files
+      operationId: login
+      parameters:
+      - description: this is a test file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponce'
+      summary: Upload file
+      tags:
+      - upload
   /users/:
     get:
       consumes:

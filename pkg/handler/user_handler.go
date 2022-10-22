@@ -3,10 +3,15 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"path"
 	"strconv"
 
 	"github.com/Ckala62rus/go/domain"
 	"github.com/gin-gonic/gin"
+)
+
+const (
+	imageDir = "./" + "/images/"
 )
 
 type getAllUsers struct {
@@ -196,5 +201,37 @@ func (h *Handler) UpdateUser(c *gin.Context) {
 		Status:  true,
 		Message: "updated user",
 		Data:    updateUser,
+	})
+}
+
+// @Summary 	 Upload file
+// @Tags         upload
+// @Description  upload other files
+// @ID login
+// @Accept       json
+// @Produce      json
+// @Param 	     file formData file true "this is a test file"
+// @Success      200  {object}  statusResponce
+// @Router       /upload [post]
+func (h *Handler) UploadImage(c *gin.Context) {
+	file, err := c.FormFile("file")
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	filepath := path.Join(imageDir + file.Filename)
+	// filepath := path.Join(imageDir + "/1/" + file.Filename)
+
+	err = c.SaveUploadedFile(file, filepath)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, statusResponce{
+		Status:  true,
+		Message: "updated user",
+		Data:    "http://" + c.Request.Host + "/images/" + file.Filename,
 	})
 }
