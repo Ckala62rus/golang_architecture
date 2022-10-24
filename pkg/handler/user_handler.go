@@ -3,11 +3,12 @@ package handler
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"path"
+	"path/filepath"
 	"strconv"
 
 	"github.com/Ckala62rus/go/domain"
+	"github.com/Ckala62rus/go/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -221,16 +222,17 @@ func (h *Handler) UploadImage(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(userId)
-
 	file, err := c.FormFile("file")
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	filepath := path.Join(imageDir + strconv.Itoa(userId) + "/" + file.Filename)
-	createFolder(imageDir + strconv.Itoa(userId) + "/")
+	timeStamp := utils.TimeStamp()
+	fileExtansion := filepath.Ext(file.Filename)
+	filepath := path.Join(imageDir + strconv.Itoa(userId) + "/" + utils.GetMD5Hash(file.Filename+timeStamp) + fileExtansion)
+
+	utils.CreateFolder(imageDir + strconv.Itoa(userId) + "/")
 
 	err = c.SaveUploadedFile(file, filepath)
 	if err != nil {
@@ -243,16 +245,4 @@ func (h *Handler) UploadImage(c *gin.Context) {
 		Message: "images was updated",
 		Data:    "http://" + c.Request.Host + "/images/" + strconv.Itoa(userId) + "/" + file.Filename,
 	})
-}
-
-// create folder if not exist
-func createFolder(dirname string) error {
-	_, err := os.Stat(dirname)
-	if os.IsNotExist(err) {
-		errDir := os.MkdirAll(dirname, 0755)
-		if errDir != nil {
-			return errDir
-		}
-	}
-	return nil
 }
