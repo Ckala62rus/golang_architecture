@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"path"
 	"strconv"
 
@@ -221,7 +222,8 @@ func (h *Handler) UploadImage(c *gin.Context) {
 	}
 
 	filepath := path.Join(imageDir + file.Filename)
-	// filepath := path.Join(imageDir + "/1/" + file.Filename)
+	// filepath := path.Join(imageDir + "1/" + file.Filename)
+	// createFolder(imageDir + "1/")
 
 	err = c.SaveUploadedFile(file, filepath)
 	if err != nil {
@@ -231,7 +233,19 @@ func (h *Handler) UploadImage(c *gin.Context) {
 
 	c.JSON(http.StatusOK, statusResponce{
 		Status:  true,
-		Message: "updated user",
+		Message: "images was updated",
 		Data:    "http://" + c.Request.Host + "/images/" + file.Filename,
 	})
+}
+
+// create folder if not exist
+func createFolder(dirname string) error {
+    _, err := os.Stat(dirname)
+    if os.IsNotExist(err) {
+        errDir := os.MkdirAll(dirname, 0755)
+    if errDir != nil {
+        return errDir
+    }
+    }
+    return nil
 }
