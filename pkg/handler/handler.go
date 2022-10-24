@@ -37,7 +37,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			auth.POST("/sign-in", h.signIn)
 		}
 
-		api.POST("/upload", h.UploadImage)
+		api.POST("/upload", h.userIdentity, h.UploadImage)
 
 		users := api.Group("/users", h.userIdentity)
 		{

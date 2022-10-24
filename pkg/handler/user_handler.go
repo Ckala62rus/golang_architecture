@@ -214,16 +214,23 @@ func (h *Handler) UpdateUser(c *gin.Context) {
 // @Param 	     file formData file true "this is a test file"
 // @Success      200  {object}  statusResponce
 // @Router       /upload [post]
+// @Security Authorization
 func (h *Handler) UploadImage(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
+
+	fmt.Println(userId)
+
 	file, err := c.FormFile("file")
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	filepath := path.Join(imageDir + file.Filename)
-	// filepath := path.Join(imageDir + "1/" + file.Filename)
-	// createFolder(imageDir + "1/")
+	filepath := path.Join(imageDir + strconv.Itoa(userId) + "/" + file.Filename)
+	createFolder(imageDir + strconv.Itoa(userId) + "/")
 
 	err = c.SaveUploadedFile(file, filepath)
 	if err != nil {
@@ -234,18 +241,18 @@ func (h *Handler) UploadImage(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponce{
 		Status:  true,
 		Message: "images was updated",
-		Data:    "http://" + c.Request.Host + "/images/" + file.Filename,
+		Data:    "http://" + c.Request.Host + "/images/" + strconv.Itoa(userId) + "/" + file.Filename,
 	})
 }
 
 // create folder if not exist
 func createFolder(dirname string) error {
-    _, err := os.Stat(dirname)
-    if os.IsNotExist(err) {
-        errDir := os.MkdirAll(dirname, 0755)
-    if errDir != nil {
-        return errDir
-    }
-    }
-    return nil
+	_, err := os.Stat(dirname)
+	if os.IsNotExist(err) {
+		errDir := os.MkdirAll(dirname, 0755)
+		if errDir != nil {
+			return errDir
+		}
+	}
+	return nil
 }

@@ -88,6 +88,11 @@
         },
         "/upload": {
             "post": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "description": "upload other files",
                 "consumes": [
                     "application/json"
@@ -345,10 +350,12 @@
             "type": "object",
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "agr.akyla@mail.ru"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "123123"
                 }
             }
         },
@@ -382,10 +389,12 @@
             ],
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "agr.akyla@mail.ru"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "123123"
                 }
             }
         },

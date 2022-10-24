@@ -8,8 +8,8 @@ import (
 )
 
 type CreateAuthUser struct {
-	Email    string
-	Password string
+	Email    string `example:"agr.akyla@mail.ru"`
+	Password string `example:"123123"`
 }
 
 // signUp
@@ -47,8 +47,8 @@ func (h *Handler) signUp(c *gin.Context) {
 }
 
 type signInInput struct {
-	Email    string `json:"email" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	Email    string `json:"email" binding:"required" example:"agr.akyla@mail.ru"`
+	Password string `json:"password" binding:"required" example:"123123"`
 }
 
 // @Summary SignIn
@@ -89,7 +89,7 @@ func (h *Handler) signIn(c *gin.Context) {
 		Status:  true,
 		Message: "authentication success!",
 		Data: map[string]interface{}{
-			"token": token,
+			"token": "Bearer " + token,
 		},
 	})
 }

@@ -3,8 +3,10 @@ definitions:
   handler.CreateAuthUser:
     properties:
       email:
+        example: agr.akyla@mail.ru
         type: string
       password:
+        example: "123123"
         type: string
     type: object
   handler.CreateUser:
@@ -24,8 +26,10 @@ definitions:
   handler.signInInput:
     properties:
       email:
+        example: agr.akyla@mail.ru
         type: string
       password:
+        example: "123123"
         type: string
     required:
     - email
@@ -116,6 +120,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/handler.statusResponce'
+      security:
+      - Authorization: []
       summary: Upload file
       tags:
       - upload

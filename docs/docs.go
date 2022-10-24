@@ -95,6 +95,11 @@ const docTemplate = `{
         },
         "/upload": {
             "post": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
                 "description": "upload other files",
                 "consumes": [
                     "application/json"
@@ -352,10 +357,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "agr.akyla@mail.ru"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "123123"
                 }
             }
         },
@@ -389,10 +396,12 @@ const docTemplate = `{
             ],
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "agr.akyla@mail.ru"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "123123"
                 }
             }
         },
