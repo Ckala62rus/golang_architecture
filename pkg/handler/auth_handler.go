@@ -21,7 +21,7 @@ type CreateAuthUser struct {
 // @Param input body CreateAuthUser true "credentials"
 // @Success      200  {object}  statusResponce
 // @Router       /auth/sign-up [post]
-func (h *Handler) signUp(c *gin.Context) {
+func (h *Handler) SignUp(c *gin.Context) {
 	var input CreateAuthUser
 
 	if err := c.BindJSON(&input); err != nil {
@@ -39,7 +39,7 @@ func (h *Handler) signUp(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, statusResponce{
+	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "User success created",
 		Data:    id,
@@ -71,7 +71,7 @@ func (h *Handler) signIn(c *gin.Context) {
 
 	if err != nil {
 		// newErrorResponse(c, http.StatusInternalServerError, err.Error())
-		c.JSON(http.StatusOK, statusResponce{
+		c.JSON(http.StatusOK, StatusResponce{
 			Status:  false,
 			Message: "authentication failed",
 			Data: map[string]interface{}{
@@ -85,7 +85,7 @@ func (h *Handler) signIn(c *gin.Context) {
 	// 	"token": token,
 	// })
 
-	c.JSON(http.StatusOK, statusResponce{
+	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "authentication success!",
 		Data: map[string]interface{}{

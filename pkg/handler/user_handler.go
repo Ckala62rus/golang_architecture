@@ -38,7 +38,7 @@ func (h *Handler) GetAllUsers(c *gin.Context) {
 	fmt.Println(userId)
 
 	users := h.services.Users.GetAllUsers()
-	c.JSON(http.StatusOK, statusResponce{
+	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "all users",
 		Data:    getAllUsers{Users: users},
@@ -61,7 +61,7 @@ func (h *Handler) GetUserByName(c *gin.Context) {
 		newErrorResponse(c, http.StatusNotFound, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, statusResponce{
+	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "one user",
 		Data:    user,
@@ -90,7 +90,7 @@ func (h *Handler) GetById(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, statusResponce{
+	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "one user",
 		Data:    user,
@@ -127,7 +127,7 @@ func (h *Handler) CreateUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, statusResponce{
+	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "one user",
 		Data:    newUser,
@@ -156,7 +156,7 @@ func (h *Handler) DeleteUserById(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, statusResponce{
+	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: fmt.Sprintf("User was delete with id:%d", id),
 	})
@@ -199,7 +199,7 @@ func (h *Handler) UpdateUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, statusResponce{
+	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "updated user",
 		Data:    updateUser,
@@ -230,7 +230,17 @@ func (h *Handler) UploadImage(c *gin.Context) {
 
 	timeStamp := utils.TimeStamp()
 	fileExtansion := filepath.Ext(file.Filename)
-	filepath := path.Join(imageDir + strconv.Itoa(userId) + "/" + utils.GetMD5Hash(file.Filename+timeStamp) + fileExtansion)
+	fileNameHash := utils.GetMD5Hash(file.Filename + timeStamp)
+	filepath := path.Join(imageDir + strconv.Itoa(userId) + "/" + fileNameHash + fileExtansion)
+
+	saveToFile := "/images/" + strconv.Itoa(userId) + "/" + file.Filename
+	_ = saveToFile
+
+	h.services.UserImage.SaveImage(domain.Image{
+		Filename: fileNameHash,
+		Path:     filepath,
+		UserId:   userId,
+	})
 
 	utils.CreateFolder(imageDir + strconv.Itoa(userId) + "/")
 
@@ -240,9 +250,9 @@ func (h *Handler) UploadImage(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, statusResponce{
+	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "images was updated",
-		Data:    "http://" + c.Request.Host + "/images/" + strconv.Itoa(userId) + "/" + file.Filename,
+		Data:    "http://" + c.Request.Host + "/images/" + strconv.Itoa(userId) + "/" + fileNameHash + fileExtansion,
 	})
 }
