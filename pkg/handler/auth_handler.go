@@ -93,3 +93,30 @@ func (h *Handler) signIn(c *gin.Context) {
 		},
 	})
 }
+
+// @Summary 	 User information
+// @Tags         auth
+// @Description  get authorization user information by id
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  statusResponce
+// @Router       /auth/me [get]
+// @Security Authorization
+func (h *Handler) Me(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
+
+	user, err := h.services.Users.GetById(userId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, statusResponce{
+		Status:  true,
+		Message: "images was updated",
+		Data:    user,
+	})
+}

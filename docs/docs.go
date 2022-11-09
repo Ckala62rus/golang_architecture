@@ -25,6 +25,34 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/auth/me": {
+            "get": {
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
+                "description": "get authorization user information by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User information",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.statusResponce"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/sign-in": {
             "post": {
                 "description": "login and return authorization bearer token",
@@ -93,6 +121,29 @@ const docTemplate = `{
                 }
             }
         },
+        "/mail/": {
+            "get": {
+                "description": "send email",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "email"
+                ],
+                "summary": "SendEmail",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.statusResponce"
+                        }
+                    }
+                }
+            }
+        },
         "/upload": {
             "post": {
                 "security": [
@@ -111,7 +162,6 @@ const docTemplate = `{
                     "upload"
                 ],
                 "summary": "Upload file",
-                "operationId": "login",
                 "parameters": [
                     {
                         "type": "file",

@@ -3,6 +3,8 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"net/smtp"
+	"os"
 	"path"
 	"path/filepath"
 	"strconv"
@@ -209,7 +211,6 @@ func (h *Handler) UpdateUser(c *gin.Context) {
 // @Summary 	 Upload file
 // @Tags         upload
 // @Description  upload other files
-// @ID login
 // @Accept       json
 // @Produce      json
 // @Param 	     file formData file true "this is a test file"
@@ -245,4 +246,54 @@ func (h *Handler) UploadImage(c *gin.Context) {
 		Message: "images was updated",
 		Data:    "http://" + c.Request.Host + "/images/" + strconv.Itoa(userId) + "/" + file.Filename,
 	})
+}
+
+// @Summary SendEmail
+// @Tags email
+// @Description send email
+// @Accept  json
+// @Produce  json
+// @Success      200  {object}  statusResponce
+// @Router /mail/ [get]
+func (h *Handler) SendEmail(c *gin.Context) {
+	// Sender data.
+    from := os.Getenv("EMAIL")
+    password := os.Getenv("PASSWORD")
+
+    // Receiver email address.
+    to := []string{
+        "agr.akyla@mail.ru",
+    }
+
+    // smtp server configuration.
+    smtpServer := smtpServer{host: "smtp.gmail.com", port: "587"}
+
+    // Message.
+    message := []byte("This is a really unimaginative message, I know. Hello!")
+
+    // Authentication.
+    auth := smtp.PlainAuth("", from, password, smtpServer.host)
+
+    // Sending email.
+    err := smtp.SendMail(smtpServer.Address(), auth, from, to, message)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+	c.JSON(http.StatusOK, statusResponce{
+		Status:  true,
+		Message: "email send successful",
+	})
+}
+
+// smtpServer data to smtp server
+type smtpServer struct {
+	host string
+	port string
+}
+
+// Address URI to smtp server
+func (s *smtpServer) Address() string {
+	return s.host + ":" + s.port
 }

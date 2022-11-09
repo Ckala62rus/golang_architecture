@@ -33,6 +33,11 @@ func (h *Handler) userIdentity(c *gin.Context) {
 		return
 	}
 
+	if userId == 0 {
+		newErrorResponse(c, http.StatusUnauthorized, "User unauthorize")
+		return
+	}
+
 	c.Set(userCtx, userId)
 }
 

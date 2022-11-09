@@ -24,6 +24,13 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	// for save images files
 	router.Static("/images", "./images")
 
+	router.LoadHTMLGlob("templates/*")
+	router.GET("/main", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+		  "title": "Main website",
+		})
+	})
+
 	// redirect on swagger ui dashboard
 	router.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/swagger/index.html")
@@ -35,9 +42,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			auth.POST("/sign-up", h.signUp)
 			auth.POST("/sign-in", h.signIn)
+			auth.GET("/me",  h.userIdentity, h.Me)
 		}
 
 		api.POST("/upload", h.userIdentity, h.UploadImage)
+		api.GET("/mail", h.SendEmail)
 
 		users := api.Group("/users", h.userIdentity)
 		{

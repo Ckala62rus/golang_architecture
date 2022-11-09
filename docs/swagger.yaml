@@ -57,6 +57,23 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
+  /auth/me:
+    get:
+      consumes:
+      - application/json
+      description: get authorization user information by id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponce'
+      security:
+      - Authorization: []
+      summary: User information
+      tags:
+      - auth
   /auth/sign-in:
     post:
       consumes:
@@ -101,12 +118,26 @@ paths:
       summary: Authentication in system
       tags:
       - auth
+  /mail/:
+    get:
+      consumes:
+      - application/json
+      description: send email
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponce'
+      summary: SendEmail
+      tags:
+      - email
   /upload:
     post:
       consumes:
       - application/json
       description: upload other files
-      operationId: login
       parameters:
       - description: this is a test file
         in: formData
