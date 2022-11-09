@@ -9,5 +9,6 @@ type Model struct {
 func RegisterModel() []Model {
 	return []Model{
 		{Model: domain.User{}},
+		{Model: domain.Image{}},
 	}
 }

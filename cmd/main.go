@@ -11,7 +11,6 @@ import (
 	"github.com/Ckala62rus/go/pkg/handler"
 	"github.com/Ckala62rus/go/pkg/repositories"
 	"github.com/Ckala62rus/go/pkg/services"
-	"github.com/go-co-op/gocron"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/sqlite"
@@ -41,11 +40,11 @@ func main() {
 	// start time execute
 	// startTime := time.Now()
 
-	s := gocron.NewScheduler(time.UTC)
-	s.Cron("* * * * *").Do(cron)
-	s.StartAsync()
+	// s := gocron.NewScheduler(time.UTC)
+	// s.Cron("* * * * *").Do(cron)
+	// s.StartAsync()
 
-	cron()
+	// cron()
 
 	dir, _ := os.Getwd()
 

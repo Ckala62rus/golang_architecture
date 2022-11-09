@@ -19,14 +19,20 @@ type Users interface {
 	UpdateUser(user domain.User) (domain.User, error)
 }
 
+type UserImage interface {
+	SaveImage(image domain.Image) (domain.Image, error)
+}
+
 type Repository struct {
 	Users
 	Authorization
+	UserImage
 }
 
 func NewUserRepository(db *gorm.DB) *Repository {
 	return &Repository{
 		Users:         NewUsersMysql(db),
 		Authorization: NewAuthGorm(db),
+		UserImage:     NewImageGorm(db),
 	}
 }

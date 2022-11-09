@@ -11,6 +11,7 @@ type User struct {
 	Email     string `gorm:"size:100;not null;uniqueIndex"`
 	Age       int    `gorm:"not null"`
 	Password  string `gorm:"not null"`
+	Image     []Image
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
