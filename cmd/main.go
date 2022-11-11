@@ -11,6 +11,7 @@ import (
 	"github.com/Ckala62rus/go/pkg/handler"
 	"github.com/Ckala62rus/go/pkg/repositories"
 	"github.com/Ckala62rus/go/pkg/services"
+	"github.com/Ckala62rus/go/pkg/utils"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/sqlite"
@@ -45,6 +46,8 @@ func main() {
 	// s.StartAsync()
 
 	// cron()
+
+	go utils.ConsumerRabbitMQ()
 
 	dir, _ := os.Getwd()
 

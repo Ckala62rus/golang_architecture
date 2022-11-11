@@ -28,7 +28,7 @@ type getAllUsers struct {
 // @Tags         users
 // @Accept       json
 // @Produce      json
-// @Success      200  {object}  statusResponce
+// @Success      200  {object}  StatusResponce
 // @Router       /users/ [get]
 // @Security Authorization
 func (h *Handler) GetAllUsers(c *gin.Context) {
@@ -53,7 +53,7 @@ func (h *Handler) GetAllUsers(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        name path string  true "User name"
-// @Success      200  {object}  statusResponce
+// @Success      200  {object}  StatusResponce
 // @Router       /users/user/{name} [get]
 // @Security Authorization
 func (h *Handler) GetUserByName(c *gin.Context) {
@@ -76,7 +76,7 @@ func (h *Handler) GetUserByName(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "User ID"
-// @Success      200  {object}  statusResponce
+// @Success      200  {object}  StatusResponce
 // @Router       /users/{id} [get]
 // @Security Authorization
 func (h *Handler) GetById(c *gin.Context) {
@@ -111,7 +111,7 @@ type CreateUser struct {
 // @Accept  json
 // @Produce  json
 // @Param input body CreateUser true "credentials"
-// @Success      200  {object}  statusResponce
+// @Success      200  {object}  StatusResponce
 // @Router /users/ [post]
 // @Security Authorization
 func (h *Handler) CreateUser(c *gin.Context) {
@@ -142,7 +142,7 @@ func (h *Handler) CreateUser(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "User ID"
-// @Success      200  {object}  statusResponce
+// @Success      200  {object}  StatusResponce
 // @Router       /users/{id} [delete]
 // @Security Authorization
 func (h *Handler) DeleteUserById(c *gin.Context) {
@@ -177,7 +177,7 @@ type UpdateUser struct {
 // @Produce      json
 // @Param        id path int true "User ID"
 // @Param 	     input body UpdateUser true "credentials"
-// @Success      200  {object}  statusResponce
+// @Success      200  {object}  StatusResponce
 // @Router       /users/{id} [put]
 // @Security Authorization
 func (h *Handler) UpdateUser(c *gin.Context) {
@@ -214,7 +214,7 @@ func (h *Handler) UpdateUser(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param 	     file formData file true "this is a test file"
-// @Success      200  {object}  statusResponce
+// @Success      200  {object}  StatusResponce
 // @Router       /upload [post]
 // @Security Authorization
 func (h *Handler) UploadImage(c *gin.Context) {
@@ -258,13 +258,13 @@ func (h *Handler) UploadImage(c *gin.Context) {
 	})
 }
 
-// @Summary SendEmail
-// @Tags email
+// @Summary 	SendEmail
+// @Tags 		email
 // @Description send email
-// @Accept  json
-// @Produce  json
-// @Success      200  {object}  statusResponce
-// @Router /mail/ [get]
+// @Accept  	json
+// @Produce  	json
+// @Success     200  {object}  StatusResponce
+// @Router /mail [get]
 func (h *Handler) SendEmail(c *gin.Context) {
 	// Sender data.
     from := os.Getenv("EMAIL")
@@ -287,13 +287,14 @@ func (h *Handler) SendEmail(c *gin.Context) {
     // Sending email.
     err := smtp.SendMail(smtpServer.Address(), auth, from, to, message)
     if err != nil {
-        fmt.Println(err)
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
         return
     }
 
 	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "email send successful",
+		Data: "email sended",
 	})
 }
 

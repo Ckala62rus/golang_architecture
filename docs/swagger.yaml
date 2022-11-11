@@ -16,6 +16,14 @@ definitions:
       name:
         type: string
     type: object
+  handler.StatusResponce:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
   handler.UpdateUser:
     properties:
       age:
@@ -34,14 +42,6 @@ definitions:
     required:
     - email
     - password
-    type: object
-  handler.statusResponce:
-    properties:
-      data: {}
-      message:
-        type: string
-      status:
-        type: boolean
     type: object
 host: localhost:8081
 info:
@@ -68,7 +68,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       security:
       - Authorization: []
       summary: User information
@@ -92,7 +92,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       summary: SignIn
       tags:
       - auth
@@ -114,11 +114,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       summary: Authentication in system
       tags:
       - auth
-  /mail/:
+  /mail:
     get:
       consumes:
       - application/json
@@ -129,7 +129,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       summary: SendEmail
       tags:
       - email
@@ -150,7 +150,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       security:
       - Authorization: []
       summary: Upload file
@@ -167,7 +167,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       security:
       - Authorization: []
       summary: Get all users
@@ -191,7 +191,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       security:
       - Authorization: []
       summary: CreateUser
@@ -214,7 +214,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       security:
       - Authorization: []
       summary: Delete user by ID
@@ -236,7 +236,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       security:
       - Authorization: []
       summary: Get user by ID
@@ -265,7 +265,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       security:
       - Authorization: []
       summary: Update user
@@ -288,7 +288,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.statusResponce'
+            $ref: '#/definitions/handler.StatusResponce'
       security:
       - Authorization: []
       summary: Get user by Name

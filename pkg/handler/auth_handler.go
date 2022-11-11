@@ -19,7 +19,7 @@ type CreateAuthUser struct {
 // @Accept       json
 // @Produce      json
 // @Param input body CreateAuthUser true "credentials"
-// @Success      200  {object}  statusResponce
+// @Success      200  {object}  StatusResponce
 // @Router       /auth/sign-up [post]
 func (h *Handler) SignUp(c *gin.Context) {
 	var input CreateAuthUser
@@ -57,7 +57,7 @@ type signInInput struct {
 // @Accept  json
 // @Produce  json
 // @Param input body signInInput true "credentials"
-// @Success	200  {object}  statusResponce
+// @Success	200  {object}  StatusResponce
 // @Router /auth/sign-in [post]
 func (h *Handler) signIn(c *gin.Context) {
 	var input signInInput
@@ -99,7 +99,7 @@ func (h *Handler) signIn(c *gin.Context) {
 // @Description  get authorization user information by id
 // @Accept       json
 // @Produce      json
-// @Success      200  {object}  statusResponce
+// @Success      200  {object}  StatusResponce
 // @Router       /auth/me [get]
 // @Security Authorization
 func (h *Handler) Me(c *gin.Context) {

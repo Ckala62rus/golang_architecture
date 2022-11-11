@@ -47,7 +47,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -81,7 +81,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -115,13 +115,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
             }
         },
-        "/mail/": {
+        "/mail": {
             "get": {
                 "description": "send email",
                 "consumes": [
@@ -138,7 +138,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -175,7 +175,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -203,7 +203,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -241,7 +241,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -278,7 +278,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -315,7 +315,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -360,7 +360,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -395,7 +395,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handler.statusResponce"
+                            "$ref": "#/definitions/handler.StatusResponce"
                         }
                     }
                 }
@@ -427,6 +427,18 @@ const docTemplate = `{
                 }
             }
         },
+        "handler.StatusResponce": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
         "handler.UpdateUser": {
             "type": "object",
             "properties": {
@@ -452,18 +464,6 @@ const docTemplate = `{
                 "password": {
                     "type": "string",
                     "example": "123123"
-                }
-            }
-        },
-        "handler.statusResponce": {
-            "type": "object",
-            "properties": {
-                "data": {},
-                "message": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "boolean"
                 }
             }
         }
