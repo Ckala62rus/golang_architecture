@@ -15,7 +15,7 @@ const (
 	salt       = "qweasdzxc" // хорошая практика добавлять соль к паролю
 	signingKey = "qweasadasfasfasfsfafasf"
 	// tokenTTL   = 12 * time.Hour
-	tokenTTL   = 1 * time.Minute
+	tokenTTL = 10 * time.Minute
 )
 
 type tokenClaims struct {

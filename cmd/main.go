@@ -11,7 +11,6 @@ import (
 	"github.com/Ckala62rus/go/pkg/handler"
 	"github.com/Ckala62rus/go/pkg/repositories"
 	"github.com/Ckala62rus/go/pkg/services"
-	"github.com/Ckala62rus/go/pkg/utils"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/sqlite"
@@ -47,8 +46,6 @@ func main() {
 
 	// cron()
 
-	go utils.ConsumerRabbitMQ()
-
 	dir, _ := os.Getwd()
 
 	logrus.SetFormatter(new(logrus.JSONFormatter))
@@ -56,6 +53,8 @@ func main() {
 	if err := godotenv.Load(dir + "\\cmd\\.env"); err != nil {
 		logrus.Fatalf("error loading env variables: %s", err.Error())
 	}
+
+	// go utils.ConsumerRabbitMQ()
 
 	// github.com/mattn/go-sqlite3
 	newLogger := logger.New(
@@ -111,13 +110,13 @@ func cron() {
 	// time := (time.Now()).Format("2022-01-02")
 	// fmt.Println("i just do it! \n time: " + time)
 	files, err := ioutil.ReadDir("./images/1")
-    if err != nil {
-        log.Fatal(err)
-    }
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    for _, file := range files {
-        fmt.Println(file.Name(), file.IsDir())
+	for _, file := range files {
+		fmt.Println(file.Name(), file.IsDir())
 		os.Remove("./images/1" + "/" + file.Name())
 		return
-    }
+	}
 }

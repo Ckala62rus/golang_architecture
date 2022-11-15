@@ -11,6 +11,7 @@ import (
 
 	"github.com/Ckala62rus/go/domain"
 	"github.com/Ckala62rus/go/pkg/utils"
+	"github.com/disintegration/imaging"
 	"github.com/gin-gonic/gin"
 )
 
@@ -251,6 +252,20 @@ func (h *Handler) UploadImage(c *gin.Context) {
 		return
 	}
 
+	// create thumb images
+	// todo save thumb file to database and create new method for creating thumb files (move to utilites package)
+	srcLoad, err := imaging.Open(filepath)
+	if err != nil {
+		fmt.Println("failed to open image: " + err.Error())
+	}
+	thumb := imaging.Resize(srcLoad, 100, 0, imaging.Lanczos)
+	// Save the resulting image as JPEG.
+	err = imaging.Save(thumb, path.Join(imageDir+strconv.Itoa(userId)+"/thumb_"+fileNameHash+fileExtansion))
+	if err != nil {
+		fmt.Println("failed to open image: " + err.Error())
+	}
+	// end thumb images
+
 	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "images was updated",
@@ -267,34 +282,37 @@ func (h *Handler) UploadImage(c *gin.Context) {
 // @Router /mail [get]
 func (h *Handler) SendEmail(c *gin.Context) {
 	// Sender data.
-    from := os.Getenv("EMAIL")
-    password := os.Getenv("PASSWORD")
+	from := os.Getenv("EMAIL")
+	password := os.Getenv("PASSWORD")
 
-    // Receiver email address.
-    to := []string{
-        "agr.akyla@mail.ru",
-    }
+	fmt.Println(from)
+	fmt.Println(password)
 
-    // smtp server configuration.
-    smtpServer := smtpServer{host: "smtp.gmail.com", port: "587"}
+	// Receiver email address.
+	to := []string{
+		"agr.akyla@mail.ru",
+	}
 
-    // Message.
-    message := []byte("This is a really unimaginative message, I know. Hello!")
+	// smtp server configuration.
+	smtpServer := smtpServer{host: "smtp.gmail.com", port: "587"}
 
-    // Authentication.
-    auth := smtp.PlainAuth("", from, password, smtpServer.host)
+	// Message.
+	message := []byte("This is a really unimaginative message, I know. Hello!")
 
-    // Sending email.
-    err := smtp.SendMail(smtpServer.Address(), auth, from, to, message)
-    if err != nil {
+	// Authentication.
+	auth := smtp.PlainAuth("", from, password, smtpServer.host)
+
+	// Sending email.
+	err := smtp.SendMail(smtpServer.Address(), auth, from, to, message)
+	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
-        return
-    }
+		return
+	}
 
 	c.JSON(http.StatusOK, StatusResponce{
 		Status:  true,
 		Message: "email send successful",
-		Data: "email sended",
+		Data:    "email sended",
 	})
 }
 
